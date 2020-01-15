@@ -11,7 +11,7 @@ class Main extends React.Component {
 
   render() {
     return <div className={'main-page'}>
-      this is main page
+      this is main page.
     </div>
   }
 }
