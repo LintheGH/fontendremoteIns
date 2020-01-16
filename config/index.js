@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -46,13 +47,18 @@ module.exports = {
     // new BundleAnalyzerPlugin({
     //   analyzerHost: '127.0.0.1',
     //   analyzerPort: '8899'
-    // })
+    // }),
+
+    // 自动加载模块，而不必到处 import 或 require 。
+    new webpack.ProvidePlugin({
+      _: 'lodash'
+    })
   ],
   module: {
     rules: [
       {
         test: /\.js/i,
-        use: [{ // 配置babel， 如果babel扩展过多，可以使用项目packjson同目录的.babelrc文件中
+        use: [{ // 配置babel， 如果babel扩展过多，可以使用项目packjson同目 录的.babelrc文件中
           loader: 'babel-loader', // babel编译es6
           options: {
             presets: [
