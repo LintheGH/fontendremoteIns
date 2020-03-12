@@ -6,6 +6,7 @@ const copyWebpackPlugin = require('copy-webpack-plugin')
 const uglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const webpackConfig = require('./index')
 const optimizationCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
+const os = require('os')
 
 module.exports = webpackMerge(webpackConfig, {
   mode: 'production',
@@ -24,11 +25,11 @@ module.exports = webpackMerge(webpackConfig, {
     minimizer: [
       // 压缩js
       new uglifyJsPlugin({
-        cache:true, // 文件缓存
-        parallel:true, // 启用多线程打包，加快打包速度
-        sourceMap:true, // 源码定位，设置为true会生成.map文件，记录每个源码的位置，浏览器可以定位具体错误位置， 缺省false
+        cache: true, // 文件缓存
+        sourceMap: false, // 源码定位，设置为true会生成.map文件，记录每个源码的位置，浏览器可以定位具体错误位置， 缺省false
+        parallel: os.cpus().length, // 多线程打包
       }),
-      new optimizationCssAssetsWebpackPlugin(), // 压缩css
+      new optimizationCssAssetsWebpackPlugin(), // 压缩css 
     ],
     splitChunks: {
       // 提取公共模块（待定）
@@ -62,27 +63,63 @@ module.exports = webpackMerge(webpackConfig, {
     rules: [
       {
         test: /\.css$/,
-        use: [ MiniCssExtractPlugin.loader,'css-loader',// 需要配合mincssextractplugin分离css
+        exclude:/node_modules/,
+        use: [ MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: { // 使用css modules
+                localIdentName: '[name]__[local]-[hash:base64:5]', // 编译出来的命名规则
+              },
+            }
+          },// 需要配合mincssextractplugin分离css
           {
             loader: 'postcss-loader',
             options: {
               plugins: [require('autoprefixer')] // 添加浏览器前缀
             }
           }
-        ] 
+        ]
       },
       {
         test: /\.less$/,
+        exclude: /node_modules/,
         use: [ 
           MiniCssExtractPlugin.loader,// 需要配合mincssextractplugin分离css
-          'css-loader', 
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[name]__[local]-[hash:base64:5]',
+              },
+            }
+          }, 
           {
             loader: 'postcss-loader',
             options: {
               plugins: [require('autoprefixer')] // 添加浏览器前缀
             }
           }, 
-          'less-loader'
+          'less-loader',
+        ]
+      },
+      { // 不能用css modules 来处理 antd 的less文件，需要单独处理
+        test: /\.less$/,
+        include: /antd/,
+        use: [
+          MiniCssExtractPlugin.loader,// 需要配合mincssextractplugin分离css
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'less-loader',
+            options: {
+              modifyVars: {
+                'hack': `true; @import "~@public/style/antd.variable.less";`, // Override with less file
+              },
+              javascriptEnabled: true,
+            }
+          }
         ]
       },
     ]
