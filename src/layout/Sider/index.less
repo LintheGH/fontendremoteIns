@@ -1,0 +1,14 @@
+@import '~@public/style/variable.less';
+
+@cardGap: 20px;
+.sider {
+  width: 100%;
+  .card {
+    &:not(:first-child) {
+      margin-top: @cardGap;
+    }
+  }
+  .aboutMe {
+    box-shadow: @boxShadow;
+  }
+}

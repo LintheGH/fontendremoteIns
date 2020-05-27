@@ -1,0 +1,40 @@
+{
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react" // 编译react（jsx）
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-transform-runtime" // babel辅助函数提取为独立的babel-runtime,减少项目体积
+      // {
+      //   "absoluteRuntime": false,
+      //   "corejs": false,
+      //   "helpers": true,
+      //   "regenerator": true,
+      //   "useESModules": false,
+      // }
+    ],
+    [
+      "import", {
+        "libraryName": "antd",
+        "libraryDirectory": "es",
+        "style": true // `style: true` 会加载 less 文件, 此处应用了自定一主题，需要用less
+      }
+    ],
+    // [
+    //   "react-css-modules",
+    //   {
+    //     "generateScopedName": "[name]__[local]-[hash:base64:5]",
+    //     "filetypes": { 
+    //       ".less": { 
+    //         "syntax": "postcss-loader" 
+    //       } 
+    //     },
+    //     // "webpackHotModuleReloading": true, // 支持热加载
+    //     "handleMissingStyleName": "warn", // 没有时进行警告
+    //     // "exclude": ".css$"
+    //   }
+    // ], 
+    "@babel/plugin-proposal-class-properties" // 允许在class中使用箭头函数直接定义方法
+  ]
+}

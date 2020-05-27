@@ -37,7 +37,7 @@ module.exports = webpackMerge(webpackConfig, {
       },
       {
         test: /\.less$/,
-        exclude: /node_modules/,
+        exclude: /node_modules|common\.less/,
         use: [
           'style-loader',// 开发环境需要css热刷新，此处需要用style-loader
           {
@@ -59,7 +59,7 @@ module.exports = webpackMerge(webpackConfig, {
       },
       { // 不能用css modules 来处理 antd 的less文件，需要单独处理
         test: /\.less$/,
-        include: /antd/,
+        include: /antd|common\.less/,
         use: [
           'style-loader',// 开发环境需要css热刷新，此处需要用style-loader
           {

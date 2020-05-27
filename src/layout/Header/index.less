@@ -1,0 +1,37 @@
+
+@import '~@public/style/variable.less';
+@blogNameSize: 24px;
+
+.header {
+  background: #fff;
+  box-shadow: 0 2px 8px #f0f1f2;
+  z-index: 10;
+  height: 100%;
+  .content {
+    width: @appContainerWidth;
+    height: 100%;;
+    margin: 0 auto;
+    .leftContent {
+      width: @sideBarWidth;
+      .blogName {
+        width: 100%;
+        display: inline-block;
+        line-height: @blogNameSize;
+        font-size: @blogNameSize;
+        border-right: @mainBorder;
+        cursor: pointer;
+        user-select: none;
+      }
+    }
+    
+    .rightContent {
+      background: #fff;
+      width: @contentWidth;
+    }
+  }
+  
+  
+  p{
+    margin-bottom: 0;
+  }
+}

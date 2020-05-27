@@ -81,40 +81,12 @@ module.exports = {
     // 多线程打包
     new HappyPack({
       id: 'happyBabel', // loader对应的ID标识
-      loaders: [
-        { // loader使用和loader实例的配置一致
-          loader: 'babel-loader',
-          options: {
-						cacheDirectory: true,
-            presets: [
-              '@babel/preset-env',
-              '@babel/preset-react', // 编译react（jsx）
-            ],
-            plugins:[
-              [
-                "import", 
-                {
-                  "libraryName": "antd",
-                  "libraryDirectory": "es",
-                  "style": true // `style: true` 会加载 less 文件
-                }
-              ],
-              [
-                "@babel/plugin-transform-runtime", // babel辅助函数提取为独立的babel-runtime,减少项目体积
-                // {
-                //   "absoluteRuntime": false,
-                //   "corejs": false,
-                //   "helpers": true,
-                //   "regenerator": true,
-                //   "useESModules": false,
-                // }
-              ],
-              "@babel/plugin-proposal-class-properties", // 允许在class中使用箭头函数直接定义方法
-            ],
-            cacheDirectory: true,
-          }
+      loaders: [{// loader使用和loader实例的配置一致
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true 
         }
-      ],
+      }], 
       //允许 HappyPack 输出日志 
       verbose: true,
       threadPool: HappyTreadPool, // 共享worker池
@@ -127,7 +99,7 @@ module.exports = {
         test: /\.js/i,
         use: [
           { //  把 js 交给id为happyBabel的happypack实例处理，实现多线程打包
-            loader: 'happypack/loader?id=happyBabel'
+            loader: 'happypack/loader?id=happyBabel',
           },
           // { // 配置babel， 如果babel扩展过多，可以使用项目packjson同目 录的.babelrc文件中
           //   loader: 'babel-loader', // babel编译es6

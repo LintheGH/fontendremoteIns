@@ -1,11 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { ConfigProvider } from 'antd';
+import zh_CN from 'antd/es/locale/zh_CN'
 
-import Router from './routers/index'
+import App from './routers/index'
 
 // import '@babel/polyfill' // 编译新JavaScript api， 此项目中已经在webpack配置的入口文件中添加处理
 import '@public/style/common.less'
-import '@public/style/index.less'
+
+const antdGlobalConfig = {
+  componentSize: 'middle',
+  locale: zh_CN
+}
 
 class Root extends React.Component {
   constructor(props) {
@@ -16,9 +22,9 @@ class Root extends React.Component {
   }
 
   render() {
-    return <div id={'root'}>
-      <Router />
-    </div>
+    return <ConfigProvider {...antdGlobalConfig}>
+      <App />
+    </ConfigProvider>
   }
 }
 

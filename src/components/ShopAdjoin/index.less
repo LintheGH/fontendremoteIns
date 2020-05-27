@@ -1,0 +1,36 @@
+@main-color: #FD8F5F;
+@normal-color: #333;
+@background-color: #eee;
+@disabled-color: #999;
+.container {
+  h2 {
+    margin: 0.5em 0px;
+  }
+  .title {
+
+  }
+  .list {
+    .item {
+      display: inline-block;
+      margin-right: 20px;
+      font-size: 14px;
+      line-height: 20px;
+      background: @background-color;
+      color: @disabled-color;
+      border: 1px solid @background-color;
+      border-radius: 3px;
+      text-align: center;
+      padding: 0 10px;
+      cursor: not-allowed;
+    }
+    .optional {
+      color: @normal-color;
+      cursor: pointer;
+    }
+    .actived{
+      color: @main-color;
+      border-color: @main-color;
+      cursor: pointer;
+    }
+  }
+}

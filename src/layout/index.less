@@ -1,15 +1,56 @@
-.layout {
-  background: #000;
+@import '~@public/style/variable.less';
+
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
+.fixed {
+  position: fixed;
+}
+.top100 {
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
-.layout2 {
-  color: #fff;
-}
-
-.layout3 {
-  margin-top: 30px;
-}
-
-.largeLayout {
-  .layout3;
+.appLayout {
+  min-height: 100vh;
+  // .relative;
+  :global {
+    .ant-layout {
+      background: @mainBackGround;
+      padding-bottom: 20px;
+    }
+    .ant-layout-has-sider {
+      padding-top: 25px;
+    }
+    .ant-layout-content {
+      width: @contentWidth;
+      flex: none;
+      background: #fff;
+    }
+  }
+  .mainContent {
+    width: @appContainerWidth;
+    margin: (20px + @headerHeight) auto 0;
+    .relative;
+    .sider {
+      .absolute;
+      top: 0;
+      left: 0;
+      width: @sideBarWidth;
+    }
+    .content {
+      background: #fff;
+      margin-left: @sideBarWidth+20px;
+    }
+  }
+  .header {
+    .fixed;
+    .top100;
+    z-index: 20;
+    height: @headerHeight;
+  }
 }
